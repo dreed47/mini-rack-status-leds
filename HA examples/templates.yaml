@@ -1,0 +1,77 @@
+templates:
+  # --- NEW: UDM sensors ---
+  - sensor:
+      - name: UDM WAN Status
+        unique_id: udm_wan_status
+        state: >
+          {% set data = state_attr('sensor.udm_wan_health','data') | default([], true) %}
+          {% set wan = (data | selectattr('subsystem','equalto','wan') | list | first) | default({}, true) %}
+          {% set stats = wan.uptime_stats | default({}, true) %}
+          {% set s = stats.WAN | default({}, true) %}
+          {% set mons = (s.monitors | default([], true)) + (s.alerting_monitors | default([], true)) %}
+          {% set up = (s.uptime | default(0, true) | int) > 0
+            or (mons | selectattr('availability','defined')
+                    | selectattr('availability','gt',0)
+                    | list | count) > 0 %}
+          {{ 'UP' if up else 'DOWN' }}
+  
+      - name: UDM WAN2 Status
+        unique_id: udm_wan2_status
+        state: >
+          {% set data = state_attr('sensor.udm_wan_health','data') | default([], true) %}
+          {% set wan = (data | selectattr('subsystem','equalto','wan') | list | first) | default({}, true) %}
+          {% set stats = wan.uptime_stats | default({}, true) %}
+          {% set s = stats.WAN2 | default({}, true) %}
+          {% set mons = (s.monitors | default([], true)) + (s.alerting_monitors | default([], true)) %}
+          {% set up = (s.uptime | default(0, true) | int) > 0
+            or (mons | selectattr('availability','defined')
+                    | selectattr('availability','gt',0)
+                    | list | count) > 0 %}
+          {{ 'UP' if up else 'DOWN' }}
+  
+      - name: UDM Internet Mode
+        unique_id: udm_internet_mode
+        state: >
+          {% set wan1 = states('sensor.udm_wan_status') %}
+          {% set wan2 = states('sensor.udm_wan2_status') %}
+          {% if wan1 == 'UP' and wan2 == 'UP' %}
+            BOTH UP
+          {% elif wan1 == 'UP' and wan2 != 'UP' %}
+            PRIMARY ACTIVE
+          {% elif wan1 != 'UP' and wan2 == 'UP' %}
+            FAILOVER ACTIVE
+          {% else %}
+            BOTH DOWN
+          {% endif %}
+  
+      - name: Kuma Any Down
+        unique_id: kuma_any_down
+        state: >
+          {% set entities = [
+            'sensor.kuma_monitor_1_status',
+            'sensor.kuma_monitor_2_status',
+            'sensor.kuma_monitor_3_status'
+          ] %}
+          {% set ns = namespace(down=0) %}
+          {% for e in entities %}
+            {% if states(e) == 'Down' %}
+              {% set ns.down = ns.down + 1 %}
+            {% endif %}
+          {% endfor %}
+          {{ 'DOWN' if ns.down > 0 else 'UP' }}
+  
+      - name: Kuma Down Count
+        unique_id: kuma_down_count
+        state: >
+          {% set entities = [
+            'sensor.kuma_monitor_1_status',
+            'sensor.kuma_monitor_2_status',
+            'sensor.kuma_monitor_3_status'
+          ] %}
+          {% set ns = namespace(down=0) %}
+          {% for e in entities %}
+            {% if states(e) == 'Down' %}
+              {% set ns.down = ns.down + 1 %}
+            {% endif %}
+          {% endfor %}
+          {{ ns.down }}

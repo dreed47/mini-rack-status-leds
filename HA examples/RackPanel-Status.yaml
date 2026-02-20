@@ -1,0 +1,264 @@
+alias: Rack Panel - Status LEDs
+description: ""
+triggers:
+  - entity_id:
+      - binary_sensor.home_assistant_node
+      - binary_sensor.pve1_status
+      - binary_sensor.pve2_status
+      - binary_sensor.pve3_status
+      - binary_sensor.pve4_status
+      - binary_sensor.pve5_status
+      - binary_sensor.pve6_status
+      - sensor.kuma_any_down
+    trigger: state
+actions:
+  - parallel:
+      - choose:
+          - conditions:
+              - condition: state
+                entity_id: binary_sensor.home_assistant_node
+                state: "on"
+            sequence:
+              - target:
+                  entity_id: light.rack_panel_leds_led_3
+                data:
+                  rgb_color:
+                    - 0
+                    - 255
+                    - 0
+                  brightness: 255
+                  effect: none
+                action: light.turn_on
+          - conditions:
+              - condition: state
+                entity_id: binary_sensor.home_assistant_node
+                state: "off"
+            sequence:
+              - target:
+                  entity_id: light.rack_panel_leds_led_3
+                data:
+                  rgb_color:
+                    - 255
+                    - 0
+                    - 0
+                  brightness: 255
+                  effect: Blink
+                action: light.turn_on
+      - choose:
+          - conditions:
+              - condition: state
+                entity_id: binary_sensor.pve1_status
+                state: "on"
+            sequence:
+              - target:
+                  entity_id: light.rack_panel_leds_led_4
+                data:
+                  rgb_color:
+                    - 0
+                    - 255
+                    - 0
+                  brightness: 255
+                  effect: none
+                action: light.turn_on
+          - conditions:
+              - condition: state
+                entity_id: binary_sensor.pve1_status
+                state: "off"
+            sequence:
+              - target:
+                  entity_id: light.rack_panel_leds_led_4
+                data:
+                  rgb_color:
+                    - 255
+                    - 0
+                    - 0
+                  brightness: 255
+                  effect: Blink
+                action: light.turn_on
+      - choose:
+          - conditions:
+              - condition: state
+                entity_id: binary_sensor.pve2_status
+                state: "on"
+            sequence:
+              - target:
+                  entity_id: light.rack_panel_leds_led_5
+                data:
+                  rgb_color:
+                    - 0
+                    - 255
+                    - 0
+                  brightness: 255
+                  effect: none
+                action: light.turn_on
+          - conditions:
+              - condition: state
+                entity_id: binary_sensor.pve2_status
+                state: "off"
+            sequence:
+              - target:
+                  entity_id: light.rack_panel_leds_led_5
+                data:
+                  rgb_color:
+                    - 255
+                    - 0
+                    - 0
+                  brightness: 255
+                  effect: Blink
+                action: light.turn_on
+      - choose:
+          - conditions:
+              - condition: state
+                entity_id: binary_sensor.pve3_status
+                state: "on"
+            sequence:
+              - target:
+                  entity_id: light.rack_panel_leds_led_6
+                data:
+                  rgb_color:
+                    - 0
+                    - 255
+                    - 0
+                  brightness: 255
+                  effect: none
+                action: light.turn_on
+          - conditions:
+              - condition: state
+                entity_id: binary_sensor.pve3_status
+                state: "off"
+            sequence:
+              - target:
+                  entity_id: light.rack_panel_leds_led_6
+                data:
+                  rgb_color:
+                    - 255
+                    - 0
+                    - 0
+                  brightness: 255
+                  effect: Blink
+                action: light.turn_on
+      - choose:
+          - conditions:
+              - condition: state
+                entity_id: binary_sensor.pve4_status
+                state: "on"
+            sequence:
+              - target:
+                  entity_id: light.rack_panel_leds_led_7
+                data:
+                  rgb_color:
+                    - 0
+                    - 255
+                    - 0
+                  brightness: 255
+                  effect: none
+                action: light.turn_on
+          - conditions:
+              - condition: state
+                entity_id: binary_sensor.pve4_status
+                state: "off"
+            sequence:
+              - target:
+                  entity_id: light.rack_panel_leds_led_7
+                data:
+                  rgb_color:
+                    - 255
+                    - 0
+                    - 0
+                  brightness: 255
+                  effect: Blink
+                action: light.turn_on
+      - choose:
+          - conditions:
+              - condition: state
+                entity_id: binary_sensor.pve5_status
+                state: "on"
+            sequence:
+              - target:
+                  entity_id: light.rack_panel_leds_led_8
+                data:
+                  rgb_color:
+                    - 0
+                    - 255
+                    - 0
+                  brightness: 255
+                  effect: none
+                action: light.turn_on
+          - conditions:
+              - condition: state
+                entity_id: binary_sensor.pve5_status
+                state: "off"
+            sequence:
+              - target:
+                  entity_id: light.rack_panel_leds_led_8
+                data:
+                  rgb_color:
+                    - 255
+                    - 0
+                    - 0
+                  brightness: 255
+                  effect: Blink
+                action: light.turn_on
+      - choose:
+          - conditions:
+              - condition: state
+                entity_id: binary_sensor.pve6_status
+                state: "on"
+            sequence:
+              - target:
+                  entity_id: light.rack_panel_leds_led_9
+                data:
+                  rgb_color:
+                    - 0
+                    - 255
+                    - 0
+                  brightness: 255
+                  effect: none
+                action: light.turn_on
+          - conditions:
+              - condition: state
+                entity_id: binary_sensor.pve6_status
+                state: "off"
+            sequence:
+              - target:
+                  entity_id: light.rack_panel_leds_led_9
+                data:
+                  rgb_color:
+                    - 255
+                    - 0
+                    - 0
+                  brightness: 255
+                  effect: Blink
+                action: light.turn_on
+      - choose:
+          - conditions:
+              - condition: state
+                entity_id: sensor.kuma_any_down
+                state: UP
+            sequence:
+              - target:
+                  entity_id: light.rack_panel_leds_led_12
+                data:
+                  rgb_color:
+                    - 0
+                    - 255
+                    - 0
+                  brightness: 255
+                  effect: none
+                action: light.turn_on
+          - conditions:
+              - condition: state
+                entity_id: sensor.kuma_any_down
+                state: DOWN
+            sequence:
+              - target:
+                  entity_id: light.rack_panel_leds_led_12
+                data:
+                  rgb_color:
+                    - 255
+                    - 0
+                    - 0
+                  brightness: 255
+                  effect: Blink
+                action: light.turn_on
+mode: restart

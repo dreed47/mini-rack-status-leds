@@ -1,0 +1,12 @@
+rest:
+  - resource: https://UDM-IP-ADDRESS/proxy/network/api/s/default/stat/health
+    method: GET
+    headers:
+      X-API-Key: !secret udm_api_key
+    verify_ssl: false
+    scan_interval: 30
+    sensor:
+      - name: "UDM WAN Health"
+        value_template: "{{ now().isoformat() }}"
+        json_attributes:
+          - data

@@ -1,0 +1,69 @@
+alias: Rack Panel - WAN Status LEDs
+description: ""
+triggers:
+  - entity_id: sensor.udm_wan_status
+    trigger: state
+  - entity_id: sensor.udm_wan2_status
+    trigger: state
+actions:
+  - choose:
+      - conditions:
+          - condition: state
+            entity_id: sensor.udm_wan_status
+            state: UP
+        sequence:
+          - target:
+              entity_id: light.rack_panel_leds_led_1
+            data:
+              rgb_color:
+                - 0
+                - 255
+                - 0
+              brightness: 255
+              effect: none
+            action: light.turn_on
+      - conditions:
+          - condition: state
+            entity_id: sensor.udm_wan_status
+            state: DOWN
+        sequence:
+          - target:
+              entity_id: light.rack_panel_leds_led_1
+            data:
+              rgb_color:
+                - 255
+                - 0
+                - 0
+              brightness: 255
+              effect: Blink
+            action: light.turn_on
+  - choose:
+      - conditions:
+          - condition: state
+            entity_id: sensor.udm_wan2_status
+            state: UP
+        sequence:
+          - target:
+              entity_id: light.rack_panel_leds_led_2
+            data:
+              rgb_color:
+                - 0
+                - 255
+                - 0
+              brightness: 255
+              effect: none
+            action: light.turn_on
+      - conditions:
+          - condition: state
+            entity_id: sensor.udm_wan2_status
+            state: DOWN
+        sequence:
+          - target:
+              entity_id: light.rack_panel_leds_led_2
+            data:
+              rgb_color:
+                - 255
+                - 0
+                - 0
+              brightness: 80
+            action: light.turn_on
