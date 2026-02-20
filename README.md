@@ -23,4 +23,4 @@ This repository will hold resources necessary to build and run a mini rack (10 i
 * Provision your ESP32 [yaml included](rack-panel-leds.yaml)
 * Solder everything together - [wiring diagram](images/wiring-diagram.png)
   * I like to use [solid core wires](images/solid-core-wires.png) in this type of application ([amazon link](https://www.amazon.com/dp/B08B8G2T5J?ref_=ppx_hzsearch_conn_dt_b_fed_asin_title_15&th=1))
-* Add whatever automations you want to show status's  
+* Add whatever automations you want to show status's (see [examples folder](/HA%20examples/))  
