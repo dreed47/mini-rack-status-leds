@@ -1,6 +1,6 @@
 # Mini Rack Status LEDs
 
-This repository will hold resources necessary to build and run a mini rack (10 inch) LED status panel using ESPHome and Home Assistant
+This repository will hold the resources necessary to build and run a mini rack (10 inch) LED status panel using ESPHome and Home Assistant
 
 
 ![image](images/status-lights.png)
